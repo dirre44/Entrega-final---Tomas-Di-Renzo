@@ -10,6 +10,13 @@
 
 {% block contenido %}
 
+<h4>{{ mensaje }}</h4>
 
+<form action="{% url 'user_register' %}" method="POST">{% csrf_token %}
+    <table>
+        {{ formulario.as_table }}
+    </table>
+    <input type="submit" value="Ingresar">
+</form>
 
 {% endblock %}
