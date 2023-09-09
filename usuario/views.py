@@ -76,7 +76,7 @@ def user_perfil(request):
     return render (request, 'user_perfil.html', {'perfil':perfil, 'avatar':obtener_avatar(request)})
     pass
 
-def user_perfil_editar(request): #no me devuelve un http response y no se porque
+def user_perfil_editar(request): #no me devuelve un http response y no se porque///pd. si no estoy logueado se rompe todo
     usuario=request.user
     perfil=Perfil.objects.get(user=usuario)
     if request.method=='POST':
@@ -85,7 +85,6 @@ def user_perfil_editar(request): #no me devuelve un http response y no se porque
         if form_perfil.is_valid() and form_user.is_valid():
             info_user=form_user.cleaned_data
             info_perfil=form_perfil.cleaned_data
-            perfil.user.username=info_user['username']
             perfil.user.first_name=info_user['first_name']
             perfil.user.email=info_user['email']
             perfil.user.password1=info_user['password1']
@@ -97,6 +96,9 @@ def user_perfil_editar(request): #no me devuelve un http response y no se porque
                 avatar_viejo[0].delete()
             perfil.save()
             return render (request, 'user_edit_perfil.html', {'form_user':form_user, 'form_perfil':form_perfil, 'avatar':obtener_avatar(request), 'perfil':perfil})
+        else:
+            mensaje='Datos invalidos'
+            return render(request, 'user_edit_perfil.html', {'form_user':form_user, 'form_perfil':form_perfil,'mensaje': mensaje}) 
         pass
     else:
         form_user=User_edit_form(instance=perfil.user)

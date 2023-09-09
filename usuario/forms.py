@@ -15,7 +15,7 @@ class User_register_form(UserCreationForm):
         help_texts= { k:'' for k in fields }
 
 class User_perfil_form(forms.Form):
-    descripcion=forms.CharField(widget=forms.Textarea)
+    descripcion=forms.CharField(required=False, widget=forms.Textarea)
     imagen=forms.ImageField(label='imagen')
     field_order=['descripcion', 'imagen']
     
@@ -24,8 +24,9 @@ class User_edit_form(UserCreationForm):
     email=forms.EmailField(label='Email')
     password1=forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2=forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
-    field_order=['username','first_name', 'email', "password1", 'password2']
+    field_order=['first_name', 'email', "password1", 'password2']
     class Meta:
         model = User
-        fields={'username', 'email', 'first_name', 'password1', 'password2'}
-        help_texts= { k:'' for k in fields }
+        #fields={'username', 'email', 'first_name', 'password1', 'password2'}
+        fields={'email', 'first_name', 'password1', 'password2'}
+        #help_texts= { k:'' for k in fields }
