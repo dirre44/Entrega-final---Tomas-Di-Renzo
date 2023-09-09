@@ -2,18 +2,23 @@
 
 {% load static %}
 
-{% block encabezado %} inicio {% endblock %}
+{% block encabezado %} Perfil de {{perfil.user.username}} {% endblock %}
 
-{% block titulo %} Bienvenidos a mi blog de comida {% endblock %}
+{% block titulo %} Perfil de {{perfil.user.username}} {% endblock %}
 
-{% block subtitulo %} este es un blog de cocina {% endblock %}
+{% block subtitulo %} Este es el perfil de {{perfil.user.username}} {% endblock %}
 
 {% block contenido %}
-
-    <table>
-        {{ formulario.as_table }}
-    </table>
-    <input type="submit" value="Ingresar">
+    <img src= '{{ avatar }}' alt="Avatar" style="width:200px;height:200px;"> 
+    <br>
+    <br>
+    <p style="color: white;"><b>Usuario: </b>{{perfil.user.username}}</p>
+    <p style="color: white;"><b>Nombre: </b>{{perfil.user.first_name}}</p>
+    <p style="color: white;"><b>Email: </b>{{perfil.user.email}}</p>
+    <p style="color: white;"><b>descripcion: </b>{{perfil.descripcion}}</p>
+    
+    <a class="btn btn-warning" href="{% url 'user_editar_perfil' %}">editar perfil</a>
+    <a class="btn btn-danger" href="{% url 'user_borrar_perfil' %}">borrar perfil</a>
 
 
 {% endblock %}
