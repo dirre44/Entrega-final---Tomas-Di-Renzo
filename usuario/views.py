@@ -76,10 +76,35 @@ def user_perfil(request):
     return render (request, 'user_perfil.html', {'perfil':perfil, 'avatar':obtener_avatar(request)})
     pass
 
-def user_perfil_editar(request):
-    pass
+def user_perfil_editar(request): #no me devuelve un http response y no se porque
+    usuario=request.user
+    perfil=Perfil.objects.get(user=usuario)
+    if request.method=='POST':
+        form_user=User_edit_form(request.POST)
+        form_perfil=User_perfil_form(request.POST, request.FILES)
+        if form_perfil.is_valid() and form_user.is_valid():
+            info_user=form_user.cleaned_data
+            info_perfil=form_perfil.cleaned_data
+            perfil.user.username=info_user['username']
+            perfil.user.first_name=info_user['first_name']
+            perfil.user.email=info_user['email']
+            perfil.user.password1=info_user['password1']
+            perfil.user.password2=info_user['password2']
+            perfil.descripcion=info_perfil['descripcion']
+            perfil.imagen=info_perfil['imagen']
+            avatar_viejo=perfil.imagen
+            if len(avatar_viejo)>0:
+                avatar_viejo[0].delete()
+            perfil.save()
+            return render (request, 'user_edit_perfil.html', {'form_user':form_user, 'form_perfil':form_perfil, 'avatar':obtener_avatar(request), 'perfil':perfil})
+        pass
+    else:
+        form_user=User_edit_form(instance=perfil.user)
+        form_perfil=User_perfil_form(initial={'imagen':perfil.imagen, 'descripcion':perfil.descripcion}) #con el instance chillaba asi que decidi no renegar
+        return render (request, 'user_edit_perfil.html', {'form_user':form_user, 'form_perfil':form_perfil, 'avatar':obtener_avatar(request), 'perfil':perfil})
 
 
 def user_perfil_borrar(request):
+    
     pass
 

@@ -1,0 +1,23 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block encabezado %} inicio {% endblock %}
+
+{% block titulo %} Bienvenidos a mi blog de comida {% endblock %}
+
+{% block subtitulo %} este es un blog de cocina {% endblock %}
+
+{% block contenido %}
+
+<h4>{{ mensaje }}</h4>
+
+<form action="{% url 'user_editar_perfil' %}" method="POST">{% csrf_token %}
+    <table>
+        {{ form_perfil.as_table }}
+        {{ form_user.as_table }}
+    </table>
+    <input type="submit" value="Ingresar">
+</form>
+
+{% endblock %}
