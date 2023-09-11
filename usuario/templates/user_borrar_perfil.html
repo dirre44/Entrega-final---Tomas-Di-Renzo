@@ -1,0 +1,20 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block encabezado %} inicio {% endblock %}
+
+{% block titulo %} Bienvenidos a mi blog de comida {% endblock %}
+
+{% block subtitulo %} este es un blog de cocina {% endblock %}
+
+{% block contenido %}
+
+<h4>{{ mensaje }}</h4>
+
+<h4>Desea borrar su perfil????</h4>
+
+<a class="btn btn-warning" href="{% url 'user_borrar_perfil' %}" method="POST">SI</a>
+<a class="btn btn-danger" href="{% url 'user_perfil' %}">NO</a>
+
+{% endblock %}

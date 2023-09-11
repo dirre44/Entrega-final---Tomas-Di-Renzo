@@ -29,7 +29,7 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <img src= '{{ avatar }}' alt="Avatar" style="width:50px;height:50px;">
+                        <img src= '{{ perfil.imagen }}' alt="Avatar" style="width:50px;height:50px;">
                         <p style="color: black;">{{ user.username }}</p>
                         <li class="nav-item"><a class="nav-link" style="color: black;" href="{% url 'user_register' %}">registrar</a></li>
                         <li class="nav-item"><a class="nav-link" style="color: black;" href="{% url 'user_login' %}">Login</a></li>
