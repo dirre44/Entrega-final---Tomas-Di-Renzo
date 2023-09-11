@@ -21,10 +21,7 @@ def obtener_avatar (request):
     if request.user.is_authenticated:
         perfil=Perfil.objects.filter(user=request.user)
         if len(perfil) != 0:
-            if not perfil.imagen:
-                return '/media/avatares/default_avatar.png'
-            else:
-                return perfil[0].imagen.url
+            return perfil[0].imagen.url
         else:
             return '/media/avatares/default_avatar.png' # No se porque pero a django le gusta que el default este ahi ¯\_(ツ)_/¯
     else:
