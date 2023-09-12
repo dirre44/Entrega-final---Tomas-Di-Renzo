@@ -81,7 +81,10 @@ def user_login(request):
         return render(request, "user_login.html", {'formulario':form, 'mensaje':mensaje, 'avatar':obtener_avatar(request)})
 
 def user_perfil(request):
-    perfil, created=Perfil.objects.get_or_create(user=request.user)   
+    perfil, created=Perfil.objects.get_or_create(user=request.user)
+    if created == True:
+        perfil.imagen = '/media/avatares/default_avatar.png' 
+        perfil.save()
     return render (request, 'user_perfil.html', {'perfil':perfil, 'avatar':obtener_avatar(request)})
     pass
 

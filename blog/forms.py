@@ -11,4 +11,4 @@ class Blog_create_form(ModelForm):
     field_order=['titulo', 'subtitulo', 'cuerpo', 'imagen']
     class Meta:
         model = Blog
-        fields = {'titulo', 'subtitulo', 'cuerpo', 'fecha', 'imagen', 'autor'}
+        fields = {'titulo', 'subtitulo', 'cuerpo', 'imagen'}
