@@ -13,7 +13,7 @@
 {% for blog in lista_blog %}
 <!-- Post preview-->
     <div class="post-preview">
-        <a href="post.html">
+        <a href="{% url 'app_blog:blog_mostrar_detalle' blog.id %}">
             <h2 class="post-title">{{ blog.titulo }}</h2>
             <h3 class="post-subtitle">{{ blog.subtitulo }}</h3>
         </a>

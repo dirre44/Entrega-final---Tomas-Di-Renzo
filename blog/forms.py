@@ -7,8 +7,13 @@ import datetime
 
 
 class Blog_create_form(ModelForm):
-    fecha = forms.DateField(initial=datetime.date.today)
+    imagen=forms.ImageField(required=True)
     field_order=['titulo', 'subtitulo', 'cuerpo', 'imagen']
     class Meta:
         model = Blog
         fields = {'titulo', 'subtitulo', 'cuerpo', 'imagen'}
+
+class Blog_comentar_form(ModelForm):
+    class Meta:
+        model = Comentario
+        fields = {'cuerpo'}

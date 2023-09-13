@@ -1,22 +1,22 @@
-{% extends "padre.html" %}
+{% extends "index.html" %}
 
 {% load static %}
 
-{% block encabezado %} inicio {% endblock %}
+{% block encabezado %} Blog {% endblock %}
 
 {% block titulo %} Bienvenidos a mi blog de comida {% endblock %}
 
 {% block subtitulo %} este es un blog de cocina {% endblock %}
 
-{% block contenido %}
+{% block blog %}
 
-<h4>{{ mensaje }}</h4>
-
-<form action="{% url 'app_user:user_register' %}" method="POST">{% csrf_token %}
+<form action="{% url 'app_blog:blog_editar' blog.id %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
     <table>
         {{ formulario.as_table }}
     </table>
     <input type="submit" value="Ingresar">
 </form>
+
+
 
 {% endblock %}

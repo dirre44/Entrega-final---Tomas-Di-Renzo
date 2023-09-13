@@ -12,7 +12,7 @@
 
 <h4>{{ mensaje }}</h4>
 
-<form action="{% url 'user_login' %}" method="POST">{% csrf_token %}
+<form action="{% url 'app_user:user_login' %}" method="POST">{% csrf_token %}
     <table>
         {{ formulario.as_table }}
     </table>

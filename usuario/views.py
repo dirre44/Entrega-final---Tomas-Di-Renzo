@@ -17,7 +17,7 @@ from django.urls import path
 
 
 
-def obtener_avatar (request):
+'''def obtener_avatar (request):
     if request.user.is_authenticated:
         perfil=Perfil.objects.filter(user=request.user)
         if len(perfil) != 0:
@@ -26,6 +26,7 @@ def obtener_avatar (request):
             return '/media/avatares/default_avatar.png' # No se porque pero a django le gusta que el default este ahi ¯\_(ツ)_/¯
     else:
         return ''
+    '''
 
 '''def obtener_avatar (request):
     if request.user.is_authenticated:
@@ -40,7 +41,7 @@ def obtener_avatar (request):
 
 
 def inicio(request):
-    return render(request, "inicio.html",{'avatar':obtener_avatar(request)})
+    return render(request, "inicio.html")
 
 def user_register (request):
     if request.method=="POST":
@@ -50,14 +51,14 @@ def user_register (request):
             usu=info['username']
             form.save()                    
             mensaje=f'usuario "{usu}" creado correctamente'
-            return render(request, "user_register.html", {'formulario':form, 'mensaje':mensaje, 'avatar':obtener_avatar(request)})
+            return render(request, "user_register.html", {'formulario':form, 'mensaje':mensaje})
         else:
             mensaje='datos invalidos'
-            return render(request, "user_register.html", {'formulario':form, 'mensaje':mensaje,'avatar':obtener_avatar(request)})
+            return render(request, "user_register.html", {'formulario':form, 'mensaje':mensaje})
     else:
         form = User_register_form()
         mensaje=""
-        return render(request, "user_register.html", {'formulario':form, 'mensaje':mensaje, 'avatar':obtener_avatar(request)})
+        return render(request, "user_register.html", {'formulario':form, 'mensaje':mensaje})
     pass
 
 def user_login(request):
@@ -71,22 +72,31 @@ def user_login(request):
             if usuario != None:
                 login(request, usuario)
                 mensaje=f'usuario "{usu}" logueado correctamente'
-                return render(request, "inicio.html", {'formulario':form, 'mensaje':mensaje,'avatar':obtener_avatar(request)})
+                return render(request, "inicio.html", {'formulario':form, 'mensaje':mensaje})
         else:
             mensaje='datos invalidos'
-            return render(request, "user_login.html", {'formulario':form, 'mensaje':mensaje, 'avatar':obtener_avatar(request)})
+            return render(request, "user_login.html", {'formulario':form, 'mensaje':mensaje})
     else:
         form=AuthenticationForm()
         mensaje=''
-        return render(request, "user_login.html", {'formulario':form, 'mensaje':mensaje, 'avatar':obtener_avatar(request)})
+        return render(request, "user_login.html", {'formulario':form, 'mensaje':mensaje})
 
-def user_perfil(request):
+def user_perfil(request): #muestra solo el perfil del request.user 
+    #---puedo hacer que el id default sea request.user pero que si le paso un id me muestre ese perfil---
     perfil, created=Perfil.objects.get_or_create(user=request.user)
     if created == True:
         perfil.imagen = '/media/avatares/default_avatar.png' 
         perfil.save()
-    return render (request, 'user_perfil.html', {'perfil':perfil, 'avatar':obtener_avatar(request)})
-    pass
+    return render (request, 'user_perfil.html', {'perfil':perfil})
+
+
+def user_perfil_pedido(request, id): #mostrar el perfil del usuario pedido --no hecho aun--
+    perfil, created=Perfil.objects.get_or_create(user=id)
+    if created == True:
+        perfil.imagen = '/media/avatares/default_avatar.png' 
+        perfil.save()
+    return render (request, 'user_perfil.html', {'perfil':perfil})
+
 
 def user_perfil_editar(request): #No entra nunca en el if form.is_valid///pd. si no estoy logueado se rompe todo
     usuario=request.user
@@ -112,7 +122,7 @@ def user_perfil_editar(request): #No entra nunca en el if form.is_valid///pd. si
             perfil.save()
             usuario.save()
             #mensaje1='entra al perfil'            
-            return render (request, 'user_perfil.html', {'mensaje': 'aca estoy','form_user':form_user, 'form_perfil':form_perfil, 'avatar':obtener_avatar(request), 'perfil':perfil})
+            return render (request, 'user_perfil.html', {'mensaje': 'aca estoy','form_user':form_user, 'form_perfil':form_perfil, 'perfil':perfil})
         else:
             mensaje='Datos invalidos'
             return render(request, 'user_edit_perfil.html', {'form_user':form_user, 'form_perfil':form_perfil,'mensaje': mensaje}) 
@@ -120,7 +130,7 @@ def user_perfil_editar(request): #No entra nunca en el if form.is_valid///pd. si
         form_user=User_edit_form(instance=perfil.user)
         #form_perfil=User_perfil_form(instance=perfil)
         form_perfil=User_perfil_form(initial={'imagen':perfil.imagen, 'descripcion':perfil.descripcion}) #con el instance chillaba asi que decidi no renegar
-        return render (request, 'user_edit_perfil.html', {'form_user':form_user, 'form_perfil':form_perfil, 'avatar':obtener_avatar(request), 'perfil':perfil})
+        return render (request, 'user_edit_perfil.html', {'form_user':form_user, 'form_perfil':form_perfil,  'perfil':perfil})
 
 
 def user_perfil_borrar(request):
@@ -128,6 +138,6 @@ def user_perfil_borrar(request):
     if request.method=='POST':
         perfil.delete()
         mensaje=f'Usuario {perfil.user.username} borrado'
-        return render(request, "logout.html",{'avatar':obtener_avatar(request), 'mensaje':mensaje})
+        return render(request, "logout.html",{'mensaje':mensaje})
     pass
 

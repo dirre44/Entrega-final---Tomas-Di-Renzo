@@ -13,7 +13,7 @@
 <h4>{{ mensaje1 }}</h4>
 <h4>{{ mensaje2 }}</h4>
 
-<form action="{% url 'user_editar_perfil' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+<form action="{% url 'app_user:user_editar_perfil' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
     <!-- Estuve un dia entero peleandome con esto por no poner el enctype --> 
     <table>
         {{ form_perfil.as_table }}

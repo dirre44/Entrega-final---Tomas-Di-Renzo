@@ -2,6 +2,7 @@ from .views import *
 from django.urls import path
 from django.conf.urls.static import static
 
+app_name='app_user'
 urlpatterns = [
     path('', inicio, name="usuario_inicio"),
     path('register', user_register, name="user_register"),
