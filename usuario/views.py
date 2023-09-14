@@ -1,8 +1,8 @@
 from typing import Any, Dict
 from .models import *
 from .forms import * 
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseForbidden
 from django.template import Template, Context, loader
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -110,10 +110,14 @@ def user_perfil_editar(request): #No entra nunca en el if form.is_valid///pd. si
 
 @login_required
 def user_perfil_borrar(request):
-    perfil=Perfil.objects.get(user=request.user)
-    if request.method=='POST':
-        perfil.delete()
-        mensaje=f'Usuario {perfil.user.username} borrado'
-        return render(request, "logout.html",{'mensaje':mensaje})
+    perfil=get_object_or_404(Perfil, user=request.user)
+    if request.user == perfil.user or request.user.is_staff:
+        if request.method=='POST':
+            perfil.delete()
+            return redirect('app_user:usuario_inicio')
+        else:
+            return render(request, 'perfil_eliminar.html', { 'perfil':perfil})
+    else:
+        return HttpResponseForbidden("No tienes permiso para editar este blog.")
     pass
 

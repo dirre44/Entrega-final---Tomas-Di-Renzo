@@ -24,27 +24,27 @@ def blog_nuevo(request):
             blog=form.save(commit=False)
             blog.autor=request.user
             blog.save()
-            return render (request, 'blog_listar.html', {'formulario':form})
+            return render (request, 'blog_listar.html', {'formulario':form, 'perfil':conseguir_perfil(request)})
         else:
             mensaje='datos invalidos'
-            return render (request, 'blog_crear.html', {'formulario':form,'mensaje':mensaje})
+            return render (request, 'blog_crear.html', {'formulario':form,'mensaje':mensaje, 'perfil':conseguir_perfil(request)})
     else:
         form=Blog_create_form()
-        return render (request, 'blog_crear.html', {'formulario':form})
+        return render (request, 'blog_crear.html', {'formulario':form, 'perfil':conseguir_perfil(request)})
 
 def blog_mostrar_detalle(request, id):
     
     blog=Blog.objects.get(id=id)
     comentarios=comentarios_leer(request,id)
     form=Blog_comentar_form()
-    return render (request, 'post.html', {'blog':blog, 'comentarios':comentarios, 'formulario':form})
+    return render (request, 'post.html', {'blog':blog, 'comentarios':comentarios, 'formulario':form, 'perfil':conseguir_perfil(request)})
     # mostrar el blog en los template --listo--
     pass
 
 def blog_mostrar_todos(request):
     
     lista_blog=Blog.objects.all()
-    return render (request, 'blog_listar.html', {'lista_blog':lista_blog})
+    return render (request, 'blog_listar.html', {'lista_blog':lista_blog, 'perfil':conseguir_perfil(request)})
     # Mostrar cada blog en un FOR en los template --listo--
 
 @login_required
@@ -56,13 +56,13 @@ def blog_update(request, id):
             form=Blog_create_form(request.POST, request.FILES, instance=blog)
             if form.is_valid():
                 form.save()
-                return render (request, 'blog_listar.html', {'formulario':form, 'blog':blog})
+                return render (request, 'blog_listar.html', {'formulario':form, 'blog':blog, 'perfil':conseguir_perfil(request)})
             else:
                 mensaje='datos invalidos'
-                return render (request, 'blog_editar.html', {'formulario':form,'mensaje':mensaje, 'blog':blog})
+                return render (request, 'blog_editar.html', {'formulario':form,'mensaje':mensaje, 'blog':blog, 'perfil':conseguir_perfil(request)})
         else:
             form=Blog_create_form(instance=blog)
-            return render (request, 'blog_editar.html', {'formulario':form, 'blog':blog})
+            return render (request, 'blog_editar.html', {'formulario':form, 'blog':blog, 'perfil':conseguir_perfil(request)})
     else:
         return redirect('app_blog:blog_mostrar_todos')
 
@@ -74,7 +74,7 @@ def blog_eliminar(request, id):
             blog.delete()
             return redirect('app_blog:blog_mostrar_todos')
         else:
-            return render(request, 'blog_eliminar.html', {'blog':blog})
+            return render(request, 'blog_eliminar.html', {'blog':blog, 'perfil':conseguir_perfil(request)})
     else:
         return HttpResponseForbidden("No tienes permiso para editar este blog.")
             
@@ -101,3 +101,12 @@ def blog_comentar(request, id):
             return redirect('app_blog:blog_mostrar_detalle', id=id)
     else:
         return redirect('app_blog:blog_mostrar_todos')
+    
+
+def conseguir_perfil(request):
+    if request.user.is_authenticated:
+        perfil, created = Perfil.objects.get_or_create(user=request.user)
+        if created==True:
+            perfil.imagen = '/media/avatares/default_avatar.png' 
+            perfil.save()             
+        return perfil

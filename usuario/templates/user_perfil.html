@@ -17,9 +17,10 @@
     <p style="color: white;"><b>Nombre: </b>{{perfil.user.first_name}}</p>
     <p style="color: white;"><b>Email: </b>{{perfil.user.email}}</p>
     <p style="color: white;"><b>descripcion: </b>{{perfil.descripcion}}</p>
-    
+    {% if request.user == perfil.user or request.user.is_staff %}
     <a class="btn btn-warning" href="{% url 'app_user:user_editar_perfil' %}">editar perfil</a>
     <a class="btn btn-danger" href="{% url 'app_user:user_borrar_perfil' %}">borrar perfil</a>
+    {% endif %}
 
 
 {% endblock %}
