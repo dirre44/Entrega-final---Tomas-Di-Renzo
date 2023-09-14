@@ -80,7 +80,13 @@ def user_perfil_editar(request): #No entra nunca en el if form.is_valid///pd. si
         form_perfil=User_perfil_form(request.POST, request.FILES, instance=perfil)
         if form_perfil.is_valid() and form_user.is_valid(): #posiblemente el problema este aca
             form_user.save()
-            form_perfil.save()          
+            form_perfil.save()
+            usuario=authenticate(
+                username=request.user.username,
+                password=form_user.cleaned_data['password1'])      
+            if usuario is not None:
+                login(request, usuario)
+
             return render (request, 'user_perfil.html', {'form_user':form_user, 'form_perfil':form_perfil, 'perfil':perfil})
         else:
             mensaje='Datos invalidos'
