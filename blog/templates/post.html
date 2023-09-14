@@ -47,7 +47,7 @@
                             <h2 class="subheading">{{ blog.subtitulo }}</h2> <!-- subtitulo-->
                             <span class="meta">
                                 Autor:
-                                <a href="{% url 'app_user:user_perfil' %}">{{ blog.autor }}</a> <!-- Autor--><!-- blog.autor-->
+                                <a href="{% url 'app_user:user_perfil' blog.autor.id %}">{{ blog.autor }}</a> <!-- Autor--><!-- blog.autor-->
                                 {{ blog.fecha }} <!-- Fecha-->
                             </span>
                         </div>
@@ -66,11 +66,11 @@
             </div>
         </article>
         <a class="btn btn-primary" href="{% url 'app_blog:blog_editar' blog.id %}">editar blog</a>
+        <a class="btn btn-primary" href="{% url 'app_blog:blog_eliminar' blog.id %}">Eliminar blog</a>
         
         <!-- comentarios -->
-        {% for comentarios in comentarios %}
-            <p><b>{{ comentario.autor }}: </b></p>
-            <p>{{ comentario.cuerpo }}</p>
+        {% for comentario in comentarios %}
+            <p><b>{{ comentario.autor }}: </b>{{ comentario.cuerpo }}</p>
         {% endfor %}
 
         <!-- comentar-->

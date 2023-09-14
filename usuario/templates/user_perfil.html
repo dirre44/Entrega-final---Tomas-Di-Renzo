@@ -9,7 +9,8 @@
 {% block subtitulo %} Este es el perfil de {{perfil.user.username}} {% endblock %}
 
 {% block contenido %}
-    <img src= '{{ user.perfil.imagen.url }}' alt="Avatar" style="width:200px;height:200px;"> 
+
+    <img src= '{{ perfil.imagen.url }}' alt="Avatar" style="width:200px;height:200px;"> 
     <br>
     <br>
     <p style="color: white;"><b>Usuario: </b>{{perfil.user.username}}</p>

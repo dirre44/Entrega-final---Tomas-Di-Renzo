@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+
+{% load static %}
+
+{% block encabezado %} Blog {% endblock %}
+
+{% block titulo %} Bienvenidos a mi blog de comida {% endblock %}
+
+{% block subtitulo %} este es un blog de cocina {% endblock %}
+
+{% block blog %}
+<form method="POST">{% csrf_token %}
+    queres borrar "{{ object }}"??
+    <input type="submit" value="SI">
+</form>
+
+{% endblock %}

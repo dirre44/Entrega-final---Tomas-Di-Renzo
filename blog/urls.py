@@ -9,4 +9,5 @@ urlpatterns = [
     path('blog_crear', blog_nuevo, name="blog_crear"),
     path('blog_editar/<id>', blog_update, name="blog_editar"),
     path('blog_comentar/<id>', blog_comentar, name="blog_comentar"),
+    path('blog_eliminar/<id>', blog_eliminar, name="blog_eliminar"),
 ]

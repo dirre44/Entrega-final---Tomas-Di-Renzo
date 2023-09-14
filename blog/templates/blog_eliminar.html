@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+
+{% load static %}
+
+{% block encabezado %} Blog {% endblock %}
+
+{% block titulo %} Bienvenidos a mi blog de comida {% endblock %}
+
+{% block subtitulo %} este es un blog de cocina {% endblock %}
+
+{% block blog %}
+
+<form action="{% url 'app_blog:blog_eliminar' blog.id %}" method="POST" >{% csrf_token %}
+    <h4>Desea borrar el Blog???</h4>
+    <input type="submit" value="SI">
+</form>
+
+{% endblock %}

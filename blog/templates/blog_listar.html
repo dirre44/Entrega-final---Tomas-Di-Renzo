@@ -19,7 +19,7 @@
         </a>
         <p class="post-meta">
             Autor: 
-            <a href="#!">{{ blog.autor }}</a>
+            <a href="{% url 'app_user:user_perfil' blog.autor.id %}">{{ blog.autor }}</a>
             {{ blog.fecha }}
         </p>
     </div>

@@ -33,10 +33,13 @@
                         <img src= '{{ user.perfil.imagen.url }}' alt="Avatar" style="width:50px;height:50px;">
                         {% endif %}
                         <p style="color: black;">{{ user.username }}</p>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" style="color: black;" href="{% url 'app_user:user_perfil' user_id=request.user.id %}">Mi perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color: black;" href="{% url 'app_user:user_logout' %}">logout</a></li>
+                        {% else %}
                         <li class="nav-item"><a class="nav-link" style="color: black;" href="{% url 'app_user:user_register' %}">registrar</a></li>
                         <li class="nav-item"><a class="nav-link" style="color: black;" href="{% url 'app_user:user_login' %}">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color: black;" href="{% url 'app_user:user_logout' %}">logout</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color: black;" href="{% url 'app_user:user_perfil' %}">Mi perfil</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -51,7 +54,7 @@
                     </div>
                     <div class="col-lg-8 align-self-baseline">
                         <p class="text-white-75 mb-5">{% block subtitulo %} {% endblock %}</p>
-                        <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+                        <a class="btn btn-primary btn-xl" href="{% url 'app_blog:blog_mostrar_todos' %}">Blog</a>
                     </div>
                 </div>
             </div>

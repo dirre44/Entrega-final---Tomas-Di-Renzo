@@ -14,6 +14,7 @@ class Blog_create_form(ModelForm):
         fields = {'titulo', 'subtitulo', 'cuerpo', 'imagen'}
 
 class Blog_comentar_form(ModelForm):
+    cuerpo=forms.CharField(label='comentar')
     class Meta:
         model = Comentario
         fields = {'cuerpo'}
