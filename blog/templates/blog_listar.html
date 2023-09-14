@@ -25,7 +25,10 @@
     </div>
     <!-- Divider-->
     <hr class="my-4" />
-{% endfor %}
+    {% endfor %}
+    {% if user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'app_blog:blog_crear' %}">crear nuevo blog</a>
+    {% endif %}
 
 
 {% endblock %}
